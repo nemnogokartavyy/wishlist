@@ -1,0 +1,142 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 50px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../../image/fon-1.JPG);
+    /* background-color: #414141; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    min-height: 100vh;
+}
+
+.title {
+    color: white;
+    font-size: 72px;
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+.list-empty {
+    color: rgb(205, 83, 205);
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.list {
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.item:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+.name {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    margin-right: 25px;
+    color: white;
+    margin-right: auto;
+}
+
+.date {
+    font-size: 18px;
+    margin-right: 25px;
+    color: white;
+    min-width: 150px;
+    padding-left: 25px;
+}
+
+.link {
+    text-decoration: underline;
+    color: white;
+    margin: 0;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px;
+    transition: text-decoration 0.1s ease-in-out transform 0.1s ease-in-out;
+    margin-right: 25px;
+}
+
+.link:focus {
+    outline: none;
+}
+
+.link:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.link:hover {
+    text-decoration: none;
+    color: rgb(205, 83, 205);
+}
+
+.link:active {
+    transform: scale(0.95);
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(205, 83, 205);
+    transition: transform 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.btn:hover {
+    transform: scale(1.10);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+
+    .item {
+        flex-direction: column;
+    }
+
+    .name {
+        margin: 0;
+        margin-bottom: 25px;
+    }
+
+    .date {
+        min-width: 0;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 25px;
+    }
+
+    .link {
+        margin: 0;
+        margin-bottom: 25px;
+    }
+
+}

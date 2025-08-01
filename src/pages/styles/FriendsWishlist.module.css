@@ -1,0 +1,222 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 50px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../../image/fon-1.JPG);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    min-height: 100vh;
+}
+
+.block-title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.title {
+    color: white;
+    font-size: 72px;
+    text-align: center;
+}
+
+.title-mail {
+    color: rgb(205, 83, 205);
+    font-size: 72px;
+    text-align: center;
+}
+
+.list-empty {
+    color: rgb(205, 83, 205);
+    font-size: 36px;
+    text-align: center;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    width: 100%;
+    justify-content: center;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(185, 50, 185, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 100%;
+    padding: 25px;
+    width: calc((100% - 50px) / 3);
+}
+
+.list>.item:only-child {
+    max-width: 650px;
+    width: 100%;
+}
+
+.justifyCenter {
+    justify-content: center;
+}
+
+.justifyStart {
+    justify-content: flex-start;
+}
+
+.sub-title {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.text {
+    color: white;
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+.image {
+    margin-bottom: 50px;
+}
+
+.link {
+    text-decoration: underline;
+    color: white;
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 50px;
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 5px;
+    transition: text-decoration 0.1s ease-in-out transform 0.1s ease-in-out color 0.1s ease-in-out;
+}
+
+.link:focus {
+    outline: none;
+}
+
+.link:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.link:hover {
+    text-decoration: none;
+    color: rgb(205, 83, 205);
+}
+
+.link:active {
+    transform: scale(0.95);
+}
+
+.btn {
+    width: calc((100% - 25px)/2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(205, 83, 205);
+    transition: transform 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.btn:hover {
+    transform: scale(1.10);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.text-marked {
+    color: rgb(205, 83, 205);
+    margin: 0;
+    font-size: 18px;
+}
+
+
+@media (max-width: 1366px) {
+
+    .title {
+        font-size: 48px;
+    }
+
+    .title-mail {
+        font-size: 48px;
+    }
+
+    .item {
+        width: calc((100% - 25px) / 2);
+    }
+
+    .sub-title {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+
+    .text {
+        margin-bottom: 25px;
+    }
+
+    .image {
+        margin-bottom: 25px;
+    }
+
+    .link {
+        margin-bottom: 25px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 50px 25px
+    }
+
+    .block-title {
+        margin-bottom: 50px;
+    }
+
+    .item {
+        width: 100%;
+        padding: 25px;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .title-mail {
+        font-size: 32px;
+    }
+
+    .text {
+        font-size: 16px;
+    }
+
+    .link {
+        margin-right: 0;
+        font-size: 18px;
+    }
+
+}

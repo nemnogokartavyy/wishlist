@@ -1,0 +1,287 @@
+.stop-scroll {
+    overflow: hidden;
+}
+
+.header {
+    padding: 0 50px;
+    min-height: 100px;
+    background-color: rgb(20, 20, 20);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    max-width: 1920px;
+    z-index: 1000;
+}
+
+.logo-link {
+    outline: none;
+    margin-right: 25px;
+}
+
+.logo {
+    border-radius: 100%;
+    width: 80px;
+    min-width: 80px;
+    transition: transform 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.logo-link:focus .logo {
+    outline: none;
+}
+
+.logo-link:focus-visible .logo {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.logo-link:hover .logo {
+    transform: scale(1.10);
+}
+
+.logo-link:active .logo {
+    transform: scale(0.95);
+}
+
+.burger {
+    display: none;
+    position: relative;
+    width: 40px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    outline-offset: 10px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.burger:focus {
+    outline: none;
+}
+
+.burger:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.burger:hover {
+    transform: scale(1.10);
+}
+
+.burger:active {
+    transform: scale(0.95);
+}
+
+.burger-line {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.burger::before,
+.burger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, bottom 0.3s ease-in-out;
+}
+
+.burger::before {
+    top: 0;
+}
+
+.burger::after {
+    bottom: 0;
+}
+
+.burger-active .burger-line {
+    opacity: 0;
+}
+
+.burger-active::before {
+    top: 50%;
+    transform: rotate(45deg);
+}
+
+.burger-active::after {
+    bottom: auto;
+    top: 50%;
+    transform: rotate(-45deg);
+}
+
+.header-block {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav {
+    margin-right: 25px;
+}
+
+.list {
+    display: flex;
+}
+
+.item {
+    text-align: center;
+}
+
+.item:not(:last-child) {
+    margin-right: 25px;
+}
+
+.link {
+    display: inline-block;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px;
+    transition: text-decoration 0.1s ease-in-out transform 0.1s ease-in-out;
+}
+
+.link:focus {
+    outline: none;
+}
+
+.link:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.link:hover {
+    color: rgb(205, 83, 205);
+}
+
+.link:active {
+    transform: scale(0.95);
+}
+
+.logout-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-user-name {
+    margin-right: 25px;
+    color: rgb(205, 83, 205);
+    font-size: 18px;
+}
+
+.btn {
+    display: inline-block;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(205, 83, 205);
+    transition: transform 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.btn:not(:last-child) {
+    margin-right: 25px;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.btn:hover {
+    transform: scale(1.10);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+
+    .header {
+        padding: 0 25px;
+    }
+
+    .header-block {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 25px;
+        position: fixed;
+        right: 0;
+        overflow-y: auto;
+        width: 100%;
+        top: 100px;
+        background-color: rgb(20, 20, 20);
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in-out;
+        border-top: 5px solid #FCC0C7;
+    }
+
+    .header-block-visible {
+        transform: none;
+    }
+
+    .nav {
+        margin: 0;
+        margin-bottom: 25px;
+    }
+
+    .list {
+        flex-direction: column;
+    }
+
+    .item {
+        margin: 0;
+    }
+
+    .item:not(:last-child) {
+        margin: 0;
+        margin-bottom: 25px;
+    }
+
+    .logout-block {
+        flex-direction: column;
+    }
+
+    .text-user-name {
+        margin: 0;
+        margin-bottom: 25px;
+    }
+
+    .burger {
+        display: block;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .logo-link {
+        margin-right: 5px;
+    }
+
+    .logo {
+        width: 50px;
+        min-width: 50px;
+    }
+
+    .btn:not(:last-child) {
+        margin-right: 5px;
+    }
+
+}

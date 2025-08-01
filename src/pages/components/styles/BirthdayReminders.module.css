@@ -1,0 +1,82 @@
+.block {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  bottom: 25px;
+  right: -300px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 25px;
+  opacity: 0;
+  animation: slideIn 0.5s forwards ease-in-out;
+  animation-delay: 3s;
+}
+
+@keyframes slideIn {
+  0% {
+    right: -300px;
+    opacity: 0;
+  }
+  100% {
+    right: 25px;
+    opacity: 1;
+  }
+}
+
+.separator {
+    margin-right: 25px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(205, 83, 205);
+    transition: transform 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.btn:hover {
+    transform: scale(1.10);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.title {
+    color: rgb(205, 83, 205);
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.list {
+
+}
+
+.item {
+
+}
+
+.item:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.text {
+        color: white;
+    font-size: 14px;
+    text-align: center;
+}

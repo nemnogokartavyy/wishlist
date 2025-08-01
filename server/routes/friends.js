@@ -1,0 +1,11 @@
+import { getFriends, addFriendLink, acceptFriend, removeFriend, getUserById } from '../controllers/friendsController.js';
+import { authMiddleware } from '../middleware/authMiddleware.js';
+import express from 'express';
+const router = express.Router();
+router.use(authMiddleware);
+router.get('/', getFriends);
+router.get('/link', addFriendLink);
+router.post('/add/:id', acceptFriend);
+router.delete('/remove/:id', removeFriend);
+router.get('/:id', getUserById);
+export default router;

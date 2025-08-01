@@ -1,0 +1,222 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 100%;
+    padding: 50px;
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 450px;
+    min-height: 600px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgb(0, 0, 0);
+}
+
+.link {
+    font-size: 18px;
+    margin-bottom: 50px;
+    color: rgb(205, 83, 205);
+    border-radius: 5px;
+    outline-offset: 5px;
+    margin-right: auto;
+    text-align: center;
+    transition: color 0.1s ease-in-out;
+}
+
+.link:focus {
+    outline: none;
+}
+
+.link:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.link:hover {
+    color: white;
+}
+
+.link:active {
+    transform: scale(0.95);
+}
+
+.title {
+    color: white;
+    font-size: 72px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.label {
+    position: relative;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+.input[name='birth_date'] {
+    margin-top: 10px;
+}
+
+.input {
+    font-size: 18px;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.input-error {
+    box-shadow: 0 0 10px 5px rgb(255, 40, 40);
+}
+
+.error {
+    width: 100%;
+    font-size: 12px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: rgb(255, 40, 40);
+    margin-bottom: 10px;
+}
+
+input[name="full_name"]+.error {
+    margin-bottom: 0;
+}
+
+.input[name='password'] {
+    padding-right: 40px;
+}
+
+.input::placeholder {
+    color: #808080;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input:focus-visible {
+    outline: 3px solid rgb(205, 83, 205);
+    cursor: text;
+}
+
+.eye {
+    display: block;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 8px;
+    top: 15%;
+    cursor: pointer;
+    user-select: none;
+    font-size: 18px;
+    color: #808080;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 0.1s ease-in-out;
+    border-radius: 5px;
+    outline-offset: 3px;
+}
+
+.eye:focus {
+    outline: none;
+}
+
+.eye:focus-visible {
+    outline: 3px solid rgb(205, 83, 205);
+}
+
+.eye:hover {
+    color: white;
+}
+
+.eye:active {
+    transform: scale(0.95);
+}
+
+.eyeOpen {
+    background-image: url('../../../public/eyeopen.png');
+}
+
+.eyeClosed {
+    background-image: url('../../../public/eyeclose.png');
+}
+
+.btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(205, 83, 205);
+    transition: transform 0.1s ease-in-out, outline 0.1s ease-in-out;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgb(255, 255, 255);
+}
+
+.btn:hover {
+    transform: scale(1.10);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.link-reg {
+    margin: 0;
+    margin-left: auto;
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+
+    .block {
+        min-width: 0;
+        min-height: 0;
+        padding: 10px;
+    }
+
+    .link {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .form {
+        width: 100%;
+    }
+
+}
