@@ -4,7 +4,7 @@ export async function getFriends(req, res) {
   if (!req.user || !req.user.id) {
     return res.status(401).json({ message: 'Не авторизован' });
   }
-  const userId = req.user.id; // получаем из запроса из токена при помощи authMiddleware
+  const userId = req.user.id;
   try {
     const [rows] = await pool.query(
       `SELECT u.id, u.full_name, u.birth_date, u.email
@@ -34,7 +34,7 @@ export async function acceptFriend(req, res) {
     return res.status(401).json({ message: 'Не авторизован' });
   }
   const userId = req.user.id;
-  const friendId = parseInt(req.params.id, 10); // берем id из параметра из URL ссылки
+  const friendId = parseInt(req.params.id, 10);
   if (isNaN(friendId)) {
     return res.status(400).json({ message: 'Неверный идентификатор пользователя' });
   }
@@ -79,7 +79,7 @@ export async function getUserById(req, res) {
     return res.status(400).json({ message: 'Неверный идентификатор пользователя' });
   }
   try {
-    const [rows] = await pool.query('SELECT id, email FROM users WHERE id = ?', [userId]);
+    const [rows] = await pool.query('SELECT id, email FROM users WHERE id = ?', [friendId]);
     if (rows.length === 0) return res.status(404).json({ message: 'Пользователь не найден' });
     res.json(rows[0]);
   } catch (err) {

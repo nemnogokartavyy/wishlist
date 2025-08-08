@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import styles from "./styles/HeroBlock.module.css";
+import { useEffect } from "react";
 
 function HeroBlock() {
+  useEffect(() => {
+    document.title = "Главная";
+  }, []);
+
   return (
     <div className={styles.block}>
       <h2 className={styles.title}>СОЗДАЙ СВОЙ СПИСОК ЖЕЛАНИЙ</h2>

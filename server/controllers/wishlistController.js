@@ -1,7 +1,7 @@
 import pool from '../db.js'
 
 export async function getMyWishlist(req, res) {
-    const userId = req.user.id; // получаем из запроса из токена при помощи authMiddleware
+    const userId = req.user.id;
     try {
         const [rows] = await pool.query('SELECT * FROM wishlist WHERE user_id = ?', [userId]);
         res.json(rows);
@@ -28,7 +28,7 @@ export async function createGift(req, res) {
 
 export async function updateGift(req, res) {
     const userId = req.user.id;
-    const wishId = req.params.id;  // берем id из параметра из URL ссылки
+    const wishId = req.params.id;
     const { giftName, comment, imageUrl, buyLink } = req.body;
     try {
         const [result] = await pool.query(
@@ -154,10 +154,6 @@ export async function unmarkGift(req, res) {
         }
         const limitDate = new Date(birthdayThisYear);
         limitDate.setDate(birthdayThisYear.getDate() - 2);
-        // console.log(`День рождения в текущем (или следующем) году: ${birthdayThisYear}`);
-        // console.log(`Лимит (birthday - 2 дня): ${limitDate}`);
-        // console.log(`Сейчас: ${now}`);
-        // console.log(`now > limitDate: ${now > limitDate}`);
         if (now > limitDate) {
             return res.status(400).json({ message: 'Снятие отметки невозможно — меньше 2 дней до дня рождения' });
         }

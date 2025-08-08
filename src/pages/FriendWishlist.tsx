@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getWishlist, markGift, unmarkGift } from "../api/wishlist";
-// import { jwtDecode } from "jwt-decode";
 import { getUser } from "../api/friends";
 import Spinner from "./components/Spinner";
+import Modal from "./components/Modal";
 import { decodeToken } from "../utils/auth";
 import styles from "./styles/FriendsWishlist.module.css";
-import stub from '../image/stub.png';
+import stub from "../image/stub.png";
 
 type WishlistItem = {
   id: number;
@@ -16,7 +16,7 @@ type WishlistItem = {
   buy_link: string;
   created_at: string;
   isMarked: boolean;
-  markedBy: number | null; // ID друга, кто отметил
+  markedBy: number | null;
 };
 
 function FriendWishlist() {
@@ -24,24 +24,18 @@ function FriendWishlist() {
   const [items, setItems] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
-  const [userEmail, setUserEmail] = useState<string | null>(null); // новое состояние
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+  useEffect(() => {
+    document.title = `Вишлист пользователя ${id}`;
+  }, [id]);
 
   useEffect(() => {
     const decoded = decodeToken();
     setCurrentUserId(decoded?.id || decoded?.userId || null);
   }, []);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     try {
-  //       const decoded: any = jwtDecode(token);
-  //       setCurrentUserId(decoded.id || decoded.userId || null);
-  //     } catch {
-  //       setCurrentUserId(null);
-  //     }
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (id) {
@@ -54,13 +48,6 @@ function FriendWishlist() {
         });
       fetchWishlist(userId);
     }
-    // console.log(userEmail);
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      fetchWishlist(parseInt(id));
-    }
   }, [id]);
 
   async function fetchWishlist(userId: number) {
@@ -70,6 +57,8 @@ function FriendWishlist() {
       setItems(res.data);
     } catch (error) {
       console.error("Ошибка загрузки вишлиста:", error);
+      setModalMessage("Ошибка загрузки вишлиста");
+      setShowModal(true);
     } finally {
       setLoading(false);
     }
@@ -80,17 +69,20 @@ function FriendWishlist() {
       await markGift(giftId);
       fetchWishlist(Number(id));
     } catch (e: any) {
-      alert(e.response?.data?.message || "Ошибка при отметке подарка");
+      setModalMessage(
+        e.response?.data?.message || "Ошибка при отметке подарка"
+      );
+      setShowModal(true);
     }
   }
 
   async function handleUnmark(giftId: number) {
-    if (!window.confirm("Снять отметку с подарка?")) return;
     try {
       await unmarkGift(giftId);
       fetchWishlist(Number(id));
     } catch (e: any) {
-      alert(e.response?.data?.message || "Ошибка при снятии отметки");
+      setModalMessage(e.response?.data?.message || "Ошибка при снятии отметки");
+      setShowModal(true);
     }
   }
 
@@ -98,7 +90,13 @@ function FriendWishlist() {
 
   return (
     <div className={styles.container}>
-      <div className={styles['block-title']}>
+      <Modal
+        show={showModal}
+        message={modalMessage}
+        onClose={() => setShowModal(false)}
+      />
+
+      <div className={styles["block-title"]}>
         <h2 className={styles.title}>Вишлист пользователя</h2>
         <span className={styles["title-mail"]}>
           {userEmail ? `${userEmail}` : `#${id}`}

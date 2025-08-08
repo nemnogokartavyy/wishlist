@@ -2,14 +2,13 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import cron from 'node-cron'
-import pool from './db.js'  // обязательно импорт
+import pool from './db.js'
 import authRoutes from './routes/auth.js'
 import friendsRouter from './routes/friends.js'
 import wishlistRoutes from './routes/wishlist.js'
 import remindersRouter from './routes/reminders.js'
 import { generateReminders } from './controllers/remindersController.js'
 
-// dotenv.config({ path: './.env' });
 dotenv.config();
 
 async function generateRemindersForAllUsers() {
@@ -20,34 +19,23 @@ async function generateRemindersForAllUsers() {
 }
 
 cron.schedule('0 0 * * *', async () => {
-    console.log('Запуск генерации напоминаний о днях рождения (cron)');
     try {
         await generateRemindersForAllUsers();
-        console.log('Генерация напоминаний завершена');
     } catch (err) {
         console.error('Ошибка при генерации напоминаний в cron:', err);
     }
 });
 
-// console.log('Запуск генерации напоминаний о днях рождения (cron)');
-//     try {
-//         await generateRemindersForAllUsers();
-//         console.log('Генерация напоминаний завершена');
-//     } catch (err) {
-//         console.error('Ошибка при генерации напоминаний в cron:', err);
-//     }
-
 const corsOptions = {
-  origin: ['http://45.151.144.210', 'http://localhost:3000', 'http://fed.by', 'https://fed.by', 'http://www.fed.by', 'https://www.fed.by'],
-  credentials: true,
+    origin: ['http://45.151.144.210', 'http://localhost:3000', 'http://localhost:5173', 'http://wishlist.fed.by', 'https://wishlist.fed.by', 'http://www.wishlist.fed.by', 'https://www.wishlist.fed.by'],
+    credentials: true,
 };
 
 const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`, req.body);
-  next();
+    next();
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/wishlist', wishlistRoutes);

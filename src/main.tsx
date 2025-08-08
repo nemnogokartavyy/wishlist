@@ -11,8 +11,6 @@ import Registration from "./pages/Registration";
 import Wishlist from "./pages/Wishlist";
 import Friends from "./pages/Friends";
 import FriendWishlist from "./pages/FriendWishlist";
-// import Spinner from "./pages/components/Spinner";
-// import BirthdayReminders from "./pages/components/BirthdayReminders";
 
 import {
   createBrowserRouter,
@@ -25,7 +23,6 @@ import {
 } from "react-router-dom";
 import FriendAccept from "./pages/components/FriendAccept";
 import HeroBlock from "./pages/HeroBlock";
-
 
 const PrivateRoute = () => {
   const isAuth = localStorage.getItem("token");
@@ -42,22 +39,6 @@ const PublicRoute = () => {
   return isAuth ? <Navigate to="/" replace /> : <Outlet />;
 };
 
-// const PrivateLayout = () => {
-//   const isAuth = localStorage.getItem("token");
-//   const location = useLocation();
-
-//   if (!isAuth) {
-//     return <Navigate to="/login" replace state={{ from: location }} />;
-//   }
-
-//   return (
-//     <>
-//       <BirthdayReminders />
-//       <Outlet />
-//     </>
-//   );
-// };
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -72,45 +53,6 @@ const router = createBrowserRouter(
             errorElement={<ErrorPage404 />}
             children={[]}
           />,
-
-          // <Route
-          //   path="/spinner"
-          //   element={<Spinner />}
-          //   errorElement={<ErrorPage404 />}
-          //   children={[]}
-          // />,
-
-          // <Route
-          //   path="/friendaccept"
-          //   element={<FriendAccept />}
-          //   errorElement={<ErrorPage404 />}
-          //   children={[]}
-          // />,
-
-          // <Route element={<PrivateRoute />}>
-          //   <Route
-          //     path="/wishlist"
-          //     element={<Wishlist />}
-          //     errorElement={<ErrorPage404 />}
-          //     children={[]}
-          //   />
-          //   <Route
-          //     path="/friends"
-          //     element={<Friends />}
-          //     errorElement={<ErrorPage404 />}
-          //   />
-          //   <Route
-          //     path="/friends/add/:id"
-          //     element={<FriendAccept />} // компонент, который примет id и вызовет acceptFriend
-          //     errorElement={<ErrorPage404 />}
-          //   />
-          //   <Route
-          //     path="/wishlist/:id"
-          //     element={<FriendWishlist />}
-          //     errorElement={<ErrorPage404 />}
-          //   />
-          // </Route>,
-
           <Route element={<PrivateRoute />}>
             <Route
               path="/wishlist"
@@ -125,7 +67,7 @@ const router = createBrowserRouter(
             />
             <Route
               path="/friends/add/:id"
-              element={<FriendAccept />} // компонент, который примет id и вызовет acceptFriend
+              element={<FriendAccept />}
               errorElement={<ErrorPage404 />}
             />
             <Route

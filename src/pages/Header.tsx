@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-// import { jwtDecode } from "jwt-decode";
 import styles from "./styles/Header.module.css";
 import classnames from "classnames";
 import { decodeToken } from "../utils/auth";
@@ -39,19 +38,6 @@ function Header() {
       document.body.classList.remove(styles["stop-scroll"]);
     }
   }, [burgerActive]);
-
-  // useEffect(() => {
-  //   if (token) {
-  //     try {
-  //       const decoded: any = jwtDecode(token);
-  //       if (decoded.email) setUserMail(decoded.email);
-  //     } catch (err) {
-  //       console.error("Ошибка декодирования токена:", err);
-  //     }
-  //   } else {
-  //     setUserMail(null);
-  //   }
-  // }, [token]);
 
   function logout() {
     localStorage.removeItem("token");
@@ -112,7 +98,7 @@ function Header() {
                     className={styles.link}
                     onClick={onNavItemClick}
                   >
-                    Мои вишлист
+                    Мой вишлист
                   </Link>
 
                 </li>

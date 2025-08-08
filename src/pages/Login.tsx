@@ -1,8 +1,9 @@
 import styles from "./styles/Login.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { login } from "../api/auth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import cn from "classnames";
+import Modal from "./components/Modal";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -10,9 +11,16 @@ function Login() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const location = useLocation();
   const from = (location.state as any)?.from?.pathname || "/";
+
+  useEffect(() => {
+    document.title = "Вход";
+  }, []);
 
   function validateForm() {
     const newErrors: { email?: string; password?: string } = {};
@@ -46,84 +54,104 @@ function Login() {
     try {
       const res = await login(form);
       localStorage.setItem("token", res.data.token);
-      alert("Вход выполнен");
-      navigate(from, { replace: true });
+      setModalMessage("Вход выполнен");
+      setIsSuccess(true);
+      setShowModal(true);
     } catch (err: any) {
-      alert("Вход провален: " + err.message);
+      setModalMessage("Вход провален");
+      setIsSuccess(false);
+      setShowModal(true);
+    }
+  }
+
+  function handleModalClick() {
+    setShowModal(false);
+    if (isSuccess) {
+      navigate(from, { replace: true });
     }
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.block}>
-        <Link to="/" className={styles.link}>
-          На главную
-        </Link>
+    <>
+      <div className={styles.container}>
+        <Modal
+          show={showModal}
+          onClose={handleModalClick}
+          message={modalMessage}
+        />
 
-        <h2 className={styles.title}>Вход</h2>
+        <div className={styles.block}>
+          <Link to="/" className={styles.link}>
+            На главную
+          </Link>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.label}>
-            <input
-              className={cn(
-                styles.input,
-                errors.email && styles["input-error"]
-              )}
-              onChange={handleChange}
-              name="email"
-              type="text"
-              required
-              placeholder="Почта"
-            />
-          </label>
+          <h2 className={styles.title}>Вход</h2>
 
-          {errors.email && <p className={styles.error}>{errors.email}</p>}
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <label className={styles.label}>
+              <input
+                className={cn(
+                  styles.input,
+                  errors.email && styles["input-error"]
+                )}
+                onChange={handleChange}
+                name="email"
+                type="text"
+                required
+                placeholder="Почта"
+              />
+            </label>
 
-          <label className={styles.label}>
-            <input
-              className={cn(
-                styles.input,
-                errors.password && styles["input-error"]
-              )}
-              onChange={handleChange}
-              name="password"
-              type={showPassword ? "text" : "password"}
-              required
-              placeholder="Пароль"
-            />
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
 
-            <span
-              className={cn(
-                styles.eye,
-                showPassword ? styles.eyeOpen : styles.eyeClosed
-              )}
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  setShowPassword(!showPassword);
-                }
-              }}
-            ></span>
-          </label>
+            <label className={styles.label}>
+              <input
+                className={cn(
+                  styles.input,
+                  errors.password && styles["input-error"]
+                )}
+                onChange={handleChange}
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+                placeholder="Пароль"
+              />
 
-          {errors.password && <p className={styles.error}>{errors.password}</p>}
+              <span
+                className={cn(
+                  styles.eye,
+                  showPassword ? styles.eyeOpen : styles.eyeClosed
+                )}
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setShowPassword(!showPassword);
+                  }
+                }}
+              ></span>
+            </label>
 
-          <button className={styles.btn} type="submit">
-            Войти
-          </button>
-        </form>
+            {errors.password && (
+              <p className={styles.error}>{errors.password}</p>
+            )}
 
-        <Link
-          to="/registration"
-          className={cn(styles.link, styles["link-reg"])}
-        >
-          Еще не зарегестрированны?
-        </Link>
+            <button className={styles.btn} type="submit">
+              Войти
+            </button>
+          </form>
+
+          <Link
+            to="/registration"
+            className={cn(styles.link, styles["link-reg"])}
+          >
+            Еще не зарегестрированны?
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -5,11 +5,12 @@ import {
   updateGift,
   deleteGift,
 } from "../api/wishlist";
-// import cn from "classnames";
 import Spinner from "./components/Spinner";
 import cn from "classnames";
 import styles from "./styles/Wishlist.module.css";
-import stub from '../image/stub.png';
+import stub from "../image/stub.png";
+import Modal from "./components/Modal";
+import ConfirmModal from "./components/ConfirmModal";
 
 type Gift = {
   id: number;
@@ -33,6 +34,38 @@ function Wishlist() {
     giftName?: string;
     comment?: string;
   }>({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [giftToDelete, setGiftToDelete] = useState<number | null>(null);
+
+    useEffect(() => {
+    document.title = "Мой вишлист";
+  }, []);
+
+  function handleDeleteClick(id: number) {
+    setGiftToDelete(id);
+    setShowConfirm(true);
+  }
+
+  async function handleDeleteConfirm() {
+    if (giftToDelete === null) return;
+    try {
+      await deleteGift(giftToDelete);
+      fetchGifts();
+    } catch {
+      setModalMessage("Ошибка удаления подарка");
+      setShowModal(true);
+    } finally {
+      setGiftToDelete(null);
+      setShowConfirm(false);
+    }
+  }
+
+  function handleDeleteCancel() {
+    setGiftToDelete(null);
+    setShowConfirm(false);
+  }
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -44,10 +77,10 @@ function Wishlist() {
     try {
       setLoading(true);
       const res = await getMyWishlist();
-      console.log("Fetched gifts:", res.data);
       setGifts(res.data);
-    } catch (err) {
-      alert("Ошибка загрузки подарков");
+    } catch {
+      setModalMessage("Ошибка загрузки подарков");
+      setShowModal(true);
     } finally {
       setLoading(false);
     }
@@ -61,32 +94,23 @@ function Wishlist() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
+
     try {
       if (editingId !== null) {
         await updateGift(editingId, form);
         setEditingId(null);
+        setModalMessage("Подарок успешно обновлен");
       } else {
         await createGift(form);
+        setModalMessage("Подарок успешно добавлен");
       }
+      setShowModal(true);
       setForm({ giftName: "", comment: "", imageUrl: "", buyLink: "" });
       fetchGifts();
-      console.log("Submitting form:", form);
     } catch {
-      alert("Ошибка сохранения подарка");
-    }
-  }
-
-  async function handleDelete(id: number) {
-    if (window.confirm("Удалить подарок?")) {
-      try {
-        await deleteGift(id);
-        fetchGifts();
-      } catch {
-        alert("Ошибка удаления");
-      }
+      setModalMessage("Ошибка сохранения подарка");
+      setShowModal(true);
     }
   }
 
@@ -107,15 +131,15 @@ function Wishlist() {
     const newErrors: typeof errors = {};
     if (!form.giftName) {
       newErrors.giftName = "Название для подарка обязательно";
-    } else if (form.giftName.length < 10 || form.giftName.length > 250) {
+    } else if (form.giftName.length < 2 || form.giftName.length > 1000) {
       newErrors.giftName =
-        "Название для подарка должно быть больше 10 и меньше 250 символов";
+        "Название для подарка должно быть больше 2 и меньше 1000 символов";
     }
     if (!form.comment) {
       newErrors.comment = "Комментарий обязателен";
-    } else if (form.comment.length < 10 || form.comment.length > 250) {
+    } else if (form.comment.length < 2 || form.comment.length > 1000) {
       newErrors.comment =
-        "Комментарий должен быть больше 10 и меньше 250 символов";
+        "Комментарий должен быть больше 2 и меньше 1000 символов";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -125,6 +149,19 @@ function Wishlist() {
 
   return (
     <div className={styles.container}>
+      <ConfirmModal
+        show={showConfirm}
+        message="Удалить подарок?"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+      />
+
+      <Modal
+        show={showModal}
+        message={modalMessage}
+        onClose={() => setShowModal(false)}
+      />
+
       <form className={styles.form} onSubmit={handleSubmit} ref={formRef}>
         <h3 className={styles["form-title"]}>Добавить новое желание</h3>
 
@@ -284,7 +321,7 @@ function Wishlist() {
                   </button>{" "}
                   <button
                     className={styles.btn}
-                    onClick={() => handleDelete(gift.id)}
+                    onClick={() => handleDeleteClick(gift.id)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
